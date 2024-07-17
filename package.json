@@ -1,0 +1,22 @@
+{
+  "name": "chatbot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@google/generative-ai": "^0.15.0",
+    "@pinecone-database/pinecone": "^2.2.2",
+    "dotenv": "^16.4.5",
+    "fs": "^0.0.1-security",
+    "pdf-parse": "^1.1.1",
+    "pinecone": "^0.1.0",
+    "pinecone-client": "^2.0.0"
+  }
+}
