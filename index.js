@@ -9,10 +9,7 @@ const { RecursiveCharacterTextSplitter } = require("langchain/text_splitter");
 const genAI = new GoogleGenerativeAI("AIzaSyDTMlyBcU0KhUqel7TT5NCuvG-KeESoxM8");
 
 
-async function run() {
-    const model = genAI.getGenerativeModel({ model: "text-embedding-004" });
-    userInput(model);
-}
+
 
 async function extractTextFromPDF(pdfData) {
     const data = await PDFParser(pdfData);
@@ -67,15 +64,26 @@ async function userInput(model) {
             topK: 2,
             includeMetadata: true
         });
-
-        console.log(queryResult.matches.length);
-
         rl.close();
+        console.log(queryResult.matches[0].metadata.text);
+        return queryResult.matches
+        
     });
 }
 
 async function getResponseFromGemini(inputText,query) {
     const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash"});
+    
+    const result = await model.generateContent(prompt);
+    const response = result.response;
+    
+    const text = response.text();
+    
+
 }
 
+async function run() {
+    const model = genAI.getGenerativeModel({ model: "text-embedding-004" });
+    userInput(model);
+}
 run();
