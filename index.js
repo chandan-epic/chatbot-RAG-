@@ -1,92 +1,61 @@
 const { GoogleGenerativeAI } = require("@google/generative-ai");
-const PDFParser = require("pdf-parse");
 const { Pinecone }=require('@pinecone-database/pinecone');
-const readline = require("readline");
-
-const { RecursiveCharacterTextSplitter } = require("langchain/text_splitter");
-const apiUrl = 'https://api.gemini.com/v1/llm/query';
-
 
 const genAI = new GoogleGenerativeAI("AIzaSyDTMlyBcU0KhUqel7TT5NCuvG-KeESoxM8");
 
+async function userInput(input,model) {
+    const result = await model.embedContent(input);
+    const inputEmbedding = result.embedding.values;
 
-
-
-async function extractTextFromPDF(pdfData) {
-    const data = await PDFParser(pdfData);
-    return data.text;
-}
-
-async function splitTextIntoChunks(text) {
-    const splitter = new RecursiveCharacterTextSplitter({
-        chunkSize: 500, 
-        chunkOverlap: 100, 
-    });
-
-    const chunks = await splitter.splitText(text);
-    return chunks;
-}
-
-async function storeEmbeddingsInPinecone(embeddings,chunks) {
-    const pc =new Pinecone({
+    const pc = new Pinecone({
         apiKey: 'a787ff1d-2c58-41dd-991e-76101e91afc4'
     });
-    console.log("pinecone connected");
-    console.log(embeddings.length,chunks.length);
     const index = pc.index('pinecone-chatbot1');
 
-    for (let i = 0; i < embeddings.length; i++) {
-        const embedding = embeddings[i];
-        await index.upsert([{
-            id: i.toString(),
-            values: embedding
 
-        }]);
-    }
+    const queryResult = await index.query({
+        vector: inputEmbedding,
+        topK: 2,
+        includeMetadata: true
+
+    });
+    //console.log(queryResult.matches[0].metadata.text);
+    return queryResult.matches
 }
 
-async function userInput(model) {
-    const rl = readline.createInterface({
-        input: process.stdin,
-        output: process.stdout
-    });
 
-    rl.question("Please enter your query: ", async (input) => {
-        const result = await model.embedContent(input);
-        const inputEmbedding = result.embedding.values;
+async function getResponseFromGemini(input,modelEmbeded,promptTemplate) {
 
-        const pc = new Pinecone({
-            apiKey: 'a787ff1d-2c58-41dd-991e-76101e91afc4'
-        });
-        const index = pc.index('pinecone-chatbot1');
 
-        const queryResult = await index.query({
-            vector: inputEmbedding,
-            topK: 2,
-            includeMetadata: true
-        });
 
-        rl.close();
-        console.log(queryResult.matches[0].metadata.text);
-        return queryResult.matches
-        
-    });
-}
-
-async function getResponseFromGemini(inputText,query) {
 
     const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash"});
     
-    const result = await model.generateContent(prompt);
-    const response = result.response;
-    
-    const text = response.text();
-    
+    const match=await userInput(input,modelEmbeded);
 
+    
+    const prompt = promptTemplate.replace('{question}', input).replace('{retrievedDocs}', match[0].metadata.text)
+    const result = await model.generateContent(prompt);
+    const response = await result.response;
+    console.log(response.text())
 }
+
+
+
+const promptTemplate = `
+You are an AI assistant with access to a vast database of information. Answer the following question using the most relevant information from your database.
+give single line answers only
+Question: {question}
+Context from retrieved documents:
+{retrievedDocs}
+Answer:
+`;
+
+const input="what is prototyping"
+
 
 async function run() {
     const model = genAI.getGenerativeModel({ model: "text-embedding-004" });
-    userInput(model);
+    getResponseFromGemini(input,model,promptTemplate)
 }
 run();
