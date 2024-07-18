@@ -7,6 +7,7 @@ const { Pinecone }=require('@pinecone-database/pinecone');
 const readline = require("readline");
 // const { Vector } = require("vectorious");
 const { RecursiveCharacterTextSplitter } = require("langchain/text_splitter");
+const apiUrl = 'https://api.gemini.com/v1/llm/query';
 
 
 
@@ -79,12 +80,12 @@ async function userInput(model) {
         console.log(queryResult.matches.length);
         // console.log("Most relevant chunk: ", queryResult.matches[0].metadata.text);
         // console.log(queryResult.matches[0].values.id);
-        // for(let i=0;i<4;i++){
-        //     textfromPinecone[i]=queryResult.matches[i].metadata.text;
-        // }
-        // const inputText = textfromPinecone.join('\n');
-        // console.log(inputText);
-        // getResponseFromGemini(inputText,input)
+        for(let i=0;i<2;i++){
+            textfromPinecone[i]=queryResult.matches[i].metadata.text;
+        }
+        const inputText = textfromPinecone.join('\n');
+        console.log(inputText);
+        getResponseFromGemini(inputText,input);
         rl.close();
     });
 }
@@ -105,7 +106,7 @@ async function getResponseFromGemini(inputText,query) {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${apiKey}`
+                'Authorization': 'AIzaSyDG6b5b5BN28AtdzJdqFtHHDawsPJFFXPQ'
             },
             body: JSON.stringify(payload)
         });
