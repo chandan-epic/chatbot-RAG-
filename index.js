@@ -10,10 +10,7 @@ const apiUrl = 'https://api.gemini.com/v1/llm/query';
 const genAI = new GoogleGenerativeAI("AIzaSyDTMlyBcU0KhUqel7TT5NCuvG-KeESoxM8");
 
 
-async function run() {
-    const model = genAI.getGenerativeModel({ model: "text-embedding-004" });
-    userInput(model);
-}
+
 
 async function extractTextFromPDF(pdfData) {
     const data = await PDFParser(pdfData);
@@ -69,49 +66,27 @@ async function userInput(model) {
             includeMetadata: true
         });
 
-        console.log(queryResult.matches.length);
-        // console.log("Most relevant chunk: ", queryResult.matches[0].metadata.text);
-        // console.log(queryResult.matches[0].values.id);
-        for(let i=0;i<2;i++){
-            textfromPinecone[i]=queryResult.matches[i].metadata.text;
-        }
-        const inputText = textfromPinecone.join('\n');
-        console.log(inputText);
-        getResponseFromGemini(inputText,input);
         rl.close();
+        console.log(queryResult.matches[0].metadata.text);
+        return queryResult.matches
+        
     });
 }
 
 async function getResponseFromGemini(inputText,query) {
-    const payload = {
-        text: inputText,
-        query: query,
-        temperature: 0.7, // Adjust for more or less randomness
-        max_tokens: 150,  // Limit the length of the response
-        top_p: 0.9,       // Nucleus sampling
-        frequency_penalty: 0.5, // Penalize repeating phrases
-        presence_penalty: 0.6,  // Encourage new topics
-        stop_sequences: ["\n"]  // Stop at a newline character
-    };
-    try {
-        const response = await fetch(apiUrl, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'AIzaSyDG6b5b5BN28AtdzJdqFtHHDawsPJFFXPQ'
-            },
-            body: JSON.stringify(payload)
-        });
 
-        if (!response.ok) {
-            throw new Error(`Error: ${response.statusText}`);
-        }
+    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash"});
+    
+    const result = await model.generateContent(prompt);
+    const response = result.response;
+    
+    const text = response.text();
+    
 
-        const data = await response.json();
-        console.log('Response from Gemini:', data);
-    } catch (error) {
-        console.error('Error fetching response from Gemini:', error);
-    }
 }
 
+async function run() {
+    const model = genAI.getGenerativeModel({ model: "text-embedding-004" });
+    userInput(model);
+}
 run();
