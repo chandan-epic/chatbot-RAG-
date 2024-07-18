@@ -1,22 +1,16 @@
 const { GoogleGenerativeAI } = require("@google/generative-ai");
-const fs = require("fs");
 const PDFParser = require("pdf-parse");
-// const { Pinecone } =require("pinecone");
-// const { PineconeClient } = require("@pinecone-database/pinecone");
 const { Pinecone }=require('@pinecone-database/pinecone');
 const readline = require("readline");
-// const { Vector } = require("vectorious");
+
 const { RecursiveCharacterTextSplitter } = require("langchain/text_splitter");
 const apiUrl = 'https://api.gemini.com/v1/llm/query';
 
 
-
 const genAI = new GoogleGenerativeAI("AIzaSyDTMlyBcU0KhUqel7TT5NCuvG-KeESoxM8");
-// const pineconeClient = new Pinecone.Client("a787ff1d-2c58-41dd-991e-76101e91afc4", "pinecone-chatbot");
-const textfromPinecone=[]
+
 
 async function run() {
-    // For embeddings, use the Text Embeddings model
     const model = genAI.getGenerativeModel({ model: "text-embedding-004" });
     userInput(model);
 }
@@ -42,16 +36,14 @@ async function storeEmbeddingsInPinecone(embeddings,chunks) {
     });
     console.log("pinecone connected");
     console.log(embeddings.length,chunks.length);
-    // const index = await Pinecone.storeEmbeddingsInPinecone()
     const index = pc.index('pinecone-chatbot1');
 
     for (let i = 0; i < embeddings.length; i++) {
         const embedding = embeddings[i];
-        // await index.upsert(i.toString(), embedding);
         await index.upsert([{
             id: i.toString(),
             values: embedding
-            // text:chunks[i]
+
         }]);
     }
 }
@@ -121,7 +113,5 @@ async function getResponseFromGemini(inputText,query) {
         console.error('Error fetching response from Gemini:', error);
     }
 }
-
-
 
 run();
