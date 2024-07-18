@@ -4,6 +4,7 @@ const { Pinecone }=require('@pinecone-database/pinecone');
 const readline = require("readline");
 
 const { RecursiveCharacterTextSplitter } = require("langchain/text_splitter");
+const apiUrl = 'https://api.gemini.com/v1/llm/query';
 
 
 const genAI = new GoogleGenerativeAI("AIzaSyDTMlyBcU0KhUqel7TT5NCuvG-KeESoxM8");
@@ -64,6 +65,7 @@ async function userInput(model) {
             topK: 2,
             includeMetadata: true
         });
+
         rl.close();
         console.log(queryResult.matches[0].metadata.text);
         return queryResult.matches
@@ -72,6 +74,7 @@ async function userInput(model) {
 }
 
 async function getResponseFromGemini(inputText,query) {
+
     const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash"});
     
     const result = await model.generateContent(prompt);
