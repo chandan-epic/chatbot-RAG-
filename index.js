@@ -1,5 +1,6 @@
 const { GoogleGenerativeAI } = require("@google/generative-ai");
 const { Pinecone }=require('@pinecone-database/pinecone');
+
 const genAI = new GoogleGenerativeAI("AIzaSyDTMlyBcU0KhUqel7TT5NCuvG-KeESoxM8");
 
 async function userInput(input,model) {
@@ -11,17 +12,23 @@ async function userInput(input,model) {
     });
     const index = pc.index('pinecone-chatbot1');
 
+
     const queryResult = await index.query({
         vector: inputEmbedding,
         topK: 2,
         includeMetadata: true
+
     });
-   
     //console.log(queryResult.matches[0].metadata.text);
     return queryResult.matches
 }
 
+
 async function getResponseFromGemini(input,modelEmbeded,promptTemplate) {
+
+
+
+
     const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash"});
     
     const match=await userInput(input,modelEmbeded);
