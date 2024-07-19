@@ -1,14 +1,28 @@
 const {uploadIntoVectorDb}=require("../createdb")
+const { Pinecone }=require('@pinecone-database/pinecone');
+const { GoogleGenerativeAI } = require("@google/generative-ai");
+
+
+const genAI = new GoogleGenerativeAI("AIzaSyDTMlyBcU0KhUqel7TT5NCuvG-KeESoxM8");
+
+const model = genAI.getGenerativeModel({ model: "text-embedding-004" });
+const pc =new Pinecone({
+    apiKey: '1fa5b48d-ca36-4199-abd0-4cccd7cba4d8'
+});
+const pdfFilePath = "./inputdata/OOSE.pdf";
+namespace="user1"
+
+
 
 function createBot(req,res){
-
      console.log(req.file);
      console.log(req.body);
-    
+     
      if (!req.file) {
          return res.status(400).json({ message: 'No file uploaded' });
      }
-     console.log('PDF file content (Buffer):', req.file.buffer);
+    uploadIntoVectorDb(pc,model,req.file.buffer,"user1")
+    console.log('PDF file content (Buffer):', req.file.buffer);
     res.json({message:"sucess"})
 }
 
