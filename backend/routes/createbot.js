@@ -1,9 +1,11 @@
 const express=require("express")
-const { createBot }=require("./controller/createbotController")
+const { createBot }=require("../controller/createbotController")
+const multer=require("multer")
 const router=express.Router()
 
-router.get("/createbot",createBot)
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
 
-module.exports={
-    router
-}
+router.get("/createbot",upload.single('pdfFile'),createBot)
+
+module.exports=router
