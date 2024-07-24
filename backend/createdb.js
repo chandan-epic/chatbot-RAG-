@@ -4,10 +4,10 @@ const PDFParser = require("pdf-parse");
 const { Pinecone }=require('@pinecone-database/pinecone');
 const { RecursiveCharacterTextSplitter } = require("langchain/text_splitter");
 
-async function extractTextFromPDF(pdfData) {
+// async function extractTextFromPDF(pdfData) {
    
-    return data.text;
-}
+//     return data.text;
+// }
 
 async function splitTextIntoChunks(text) {
     const splitter = new RecursiveCharacterTextSplitter({
@@ -32,10 +32,15 @@ async function storeEmbeddingsInPinecone(pineconeApi,namespace,embeddings,chunks
     }
 }
 
-async function uploadIntoVectorDb(pineconeApi,textEmbedModel,file,namespace,dbname) {
-   
-    const pdfText = await PDFParser(file);
-    const chunks =await splitTextIntoChunks(pdfText.text);
+async function uploadIntoVectorDb(pineconeApi,textEmbedModel,file,namespace,dbname,file_ext) {
+    let Text;
+    if(file_ext===".pdf"){
+        Text = await PDFParser(file);
+    }else if(file_ext===".txt"){
+        Text= file.toString("utf8");
+    }
+
+    const chunks =await splitTextIntoChunks(Text.text);
     const allEmbeddings = [];
     for (let chunk of chunks) {
         const result = await textEmbedModel.embedContent(chunk);

@@ -1,7 +1,10 @@
-const express=require("express") 
+const dotenv = require('dotenv');
+dotenv.config();
+
+const express=require("express");
 const createbotroute=require("./routes/createbot")
 
-const port = 3004;
+const port = 3000;
 const app=express() 
 
 app.use(express.json())
