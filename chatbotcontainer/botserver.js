@@ -4,9 +4,11 @@ const fetch = require('node-fetch');
 global.fetch = fetch;
 const express = require('express');
 const bodyParser = require('body-parser');
-const {getResponseFromGemini}=require("./chatbot")
+const {getResponseFromGemini}=require("./chatbot");
+
 const dotenv = require('dotenv');
-//dotenv.config();
+dotenv.config();
+
 const app = express();
 const port = 3000;
 
@@ -18,23 +20,24 @@ const modeltxt = genAI.getGenerativeModel({ model: "gemini-1.5-flash"});
 const modelEmbeded = genAI.getGenerativeModel({ model: "text-embedding-004" });
 
 
-const promptTemplate = `
-You are an AI assistant with access to a vast database of information. Answer the following question using the most relevant information from your database.
-,give one line answers only
-Question: {question}
-Context from retrieved documents:
-{retrievedDocs}
-Answer:
-`;
-
+// const promptTemplate = `
+// You are an AI assistant with access to a vast database of information. Answer the following question using the most relevant information from your database.
+// ,give one line answers only
+// Question: {question}
+// Context from retrieved documents:
+// {retrievedDocs}
+// Answer:
+// `;
+const promptTemplate = process.env.PROMPT_TEMPLATE;
+const namespace=process.env.NAMESPACE;
 app.use(bodyParser.json());
 app.get('/answer', async (req, res) => {
   const data=req.body
   console.log(data.question)
-  const result=await getResponseFromGemini(data.question,modelEmbeded,promptTemplate,modeltxt,pc)
-  console.log(result)
-  return res.status(200).json({ message: 'Data received successfully', receivedData:result})
+  const result=await getResponseFromGemini(data.question,modelEmbeded,promptTemplate,modeltxt,pc,namespace);
+  return res.status(200).json({ message: 'Data received successfully', receivedData:result});
 });
-app.listen(port, () => {
+
+app.listen(port,"0.0.0.0", () => {
   console.log(`Server is running on http://localhost:${port}`);
 });

@@ -19,8 +19,8 @@ async function splitTextIntoChunks(text) {
     return chunks;
 }
 
-async function storeEmbeddingsInPinecone(pineconeApi,namespace,embeddings,chunks) {
-    const index = pineconeApi.index('chatdata');
+async function storeEmbeddingsInPinecone(pineconeApi,namespace,embeddings,chunks,dbname) {
+    const index = pineconeApi.index(dbname);
     console.log("connected to pine cone")
     for (let i = 0; i < embeddings.length; i++) {
         const embedding = embeddings[i];
@@ -31,7 +31,8 @@ async function storeEmbeddingsInPinecone(pineconeApi,namespace,embeddings,chunks
         }]);
     }
 }
-async function uploadIntoVectorDb(pineconeApi,textEmbedModel,file,namespace) {
+
+async function uploadIntoVectorDb(pineconeApi,textEmbedModel,file,namespace,dbname) {
    
     const pdfText = await PDFParser(file);
     const chunks =await splitTextIntoChunks(pdfText.text);
@@ -42,7 +43,7 @@ async function uploadIntoVectorDb(pineconeApi,textEmbedModel,file,namespace) {
         allEmbeddings.push(embedding.values); 
     }
     
-    await storeEmbeddingsInPinecone(pineconeApi,namespace,allEmbeddings,chunks);
+    await storeEmbeddingsInPinecone(pineconeApi,namespace,allEmbeddings,chunks,dbname);
     console.log("All embeddings stored in Pinecone.");
 }
 
@@ -53,15 +54,17 @@ const model = genAI.getGenerativeModel({ model: "text-embedding-004" });
 
 const delete_data=()=>{
     const pc =new Pinecone({
-        apiKey: '1fa5b48d-ca36-4199-abd0-4cccd7cba4d8'
+        apiKey: 'a787ff1d-2c58-41dd-991e-76101e91afc4'
     });
-    const pdfFilePath = "./inputdata/OOSE.pdf";
-    namespace="user1"
-    const index = pc.index('chatdata');
-    index.namespace("user1").deleteAll()
+    // const pdfFilePath = "./inputdata/OOSE.pdf";
+    // namespace="user1"
+    const index = pc.index('pinecone-chatbot1');
+    index.deleteAll()
 }
 
 //uploadIntoVectorDb(pc,model,pdfFilePath,namespace)
 module.exports={
     uploadIntoVectorDb
 }
+
+// delete_data();
