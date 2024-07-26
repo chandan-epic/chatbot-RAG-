@@ -2,15 +2,20 @@ import { useState } from "react";
 
 import { close, logo, menu } from "../assets";
 import { navLinks } from "../constants";
-
+import LoginPopup from "./LoginPopUP/LoginPopup";
 const Navbar = () => {
   const [active, setActive] = useState("Home");
-  const [toggle, setToggle] = useState(false);
+  const [toggle,setToggle]=useState(false)
+  const [loginPopup, setLoginPopup] = useState(false);
+  const handleLoginPopup = () => {
+    setLoginPopup(!loginPopup);
+  };
+
 
   return (
     <nav className="w-full flex py-6 justify-between items-center navbar">
-      <img src={logo} alt="ho" className="w-[124px] h-[32px]" />
-
+      <span className=" text-3xl text-white font-bold ">Rag</span>
+      <p className=" text-3xl text-white font-bold text-gradient">Chat</p>
       <ul className="list-none sm:flex hidden justify-end items-center flex-1">
         {navLinks.map((nav, index) => (
           <li
@@ -23,6 +28,13 @@ const Navbar = () => {
             <a href={`#${nav.id}`}>{nav.title}</a>
           </li>
         ))}
+       <li  
+            className={`font-poppins font-normal cursor-pointer text-[16px] ${
+              active === "login" ? "text-white" : "text-dimWhite"
+            } ml-6`}
+            onClick={() => {setActive("login");handleLoginPopup()}}>
+              Login
+       </li>
       </ul>
 
       <div className="sm:hidden flex flex-1 justify-end items-center">
@@ -53,6 +65,7 @@ const Navbar = () => {
           </ul>
         </div>
       </div>
+      <LoginPopup loginPopup={loginPopup} handleLoginPopup={handleLoginPopup} />
     </nav>
   );
 };

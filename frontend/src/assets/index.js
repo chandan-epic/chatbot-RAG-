@@ -7,7 +7,7 @@ import dropbox from "./dropbox.png";
 import logo from "./logo.svg";
 import quotes from "./quotes.svg";
 import robot from "./robot.png";
-import robo from "./robo.png";
+import robo2 from "./robo2.png";
 import send from "./Send.svg";
 import shield from "./Shield.svg";
 import star from "./Star.svg";
@@ -35,7 +35,7 @@ export {
   logo,
   quotes,
   robot,
-  robo,
+  robo2,
   send,
   shield,
   star,
