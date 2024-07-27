@@ -1,11 +1,17 @@
 const dotenv = require('dotenv');
 dotenv.config();
+const cors = require('cors');
 
 const express=require("express");
 const createbotroute=require("./routes/createbot")
 
 const port = 3000;
 const app=express() 
+
+app.use(cors({
+  origin: 'http://localhost:5173', // URL of your React frontend
+  credentials: true
+}));
 
 app.use(express.json())
 app.use("/",createbotroute)

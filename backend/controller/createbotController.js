@@ -21,21 +21,35 @@ Context from retrieved documents:
 Answer:
 `;
 
+
+    // Function to send a message
+    
+
 async function createBot(req,res){
-     
-     if (!req.file) {
-         return res.status(400).json({ message: 'No file uploaded' });
-     }
+    // const sendEvent = (data) => {
+    //     res.write(`data: ${JSON.stringify(data)}\n\n`);
+    // };
+    //  if (!req.file) {
+    //      return res.status(400).json({ message: 'No file uploaded' });
+    //  }
+    // res.setHeader('Content-Type', 'text/event-stream');
+    // res.setHeader('Cache-Control', 'no-cache');
+    // res.setHeader('Connection', 'keep-alive');
 
-     const file_ext=path.extname(req.file.originalname);
-     console.log(req.body.api);
-    //  console.log(file_ext);
-    await uploadIntoVectorDb(pc,model,req.file.buffer,"user5","pinecone-chatbot1",file_ext);
+    //  const file_ext=path.extname(req.file.originalname);
+    //  sendEvent("file uploaded")
+    //  console.log(req.body.api);
+    // //  console.log(file_ext);
+    //  await uploadIntoVectorDb(pc,model,req.file.buffer,"user5","pinecone-chatbot1",file_ext);
+    //  sendEvent("data processed sucessfully")
+    //  const ip=await createcontainer("manohar",req.body.api,"a787ff1d-2c58-41dd-991e-76101e91afc4","user5",promptTemplate);
+    //  sendEvent("container created")
+    //  sendEvent(ip)
+    //  res.end();
 
-     const ip=await createcontainer("manohar",req.body.api,"a787ff1d-2c58-41dd-991e-76101e91afc4","user5",promptTemplate);
-     console.log("container running:",ip);
+     console.log("container running:");
 
-    res.json({message:"sucess"});
+    // res.json({message:"sucess"});
 }
 
 module.exports={

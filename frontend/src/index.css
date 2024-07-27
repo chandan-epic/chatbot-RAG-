@@ -162,4 +162,33 @@
   filter: blur(750px);
 }
 
-
+@keyframes slideInFromLeft {
+    0% {
+      opacity: 0;
+      transform: translateX(-100%);
+    }
+    100% {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+  
+  @keyframes slideInFromRight {
+    0% {
+      opacity: 0;
+      transform: translateX(100%);
+    }
+    100% {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+  
+  .animate-slideInFromLeft {
+    animation: slideInFromLeft 1s ease-out;
+  }
+  
+  .animate-slideInFromRight {
+    animation: slideInFromRight 0.8s ease-out;
+  }
+  

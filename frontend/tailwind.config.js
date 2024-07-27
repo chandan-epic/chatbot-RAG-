@@ -34,5 +34,19 @@ module.exports = {
       md: "3rem",
     },
   },
+  keyframes: {
+    slideInFromLeft: {
+      '0%': { opacity: '0', transform: 'translateX(-100%)' },
+      '100%': { opacity: '1', transform: 'translateX(0)' },
+    },
+    slideInFromRight: {
+      '0%': { opacity: '0', transform: 'translateX(100%)' },
+      '100%': { opacity: '1', transform: 'translateX(0)' },
+    },
+  },
+  animation: {
+    slideInFromLeft: 'slideInFromLeft 1s ease-out',
+    slideInFromRight: 'slideInFromRight 1s ease-out',
+  },
   plugins: [],
 };
