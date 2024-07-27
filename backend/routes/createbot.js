@@ -6,7 +6,7 @@ const router=express.Router()
 
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
-router.get("/createbot",upload.single('pdfFile'),createBot);
+router.post("/createbot",upload.single('file'),createBot);
 
 module.exports=router;
 

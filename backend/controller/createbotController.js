@@ -13,11 +13,13 @@ const pc =new Pinecone({
 namespace="user1";
 
 const promptTemplate = `
-You are an AI assistant with access to a vast database of information. Answer the following question using the most relevant information from your database.
-give single line answers only
+You are an AI assistant in the domian of {domain} with access to a database of information. Answer the following question using the most relevant information from given context.
+give {nooflines} lines answers only
+description about your domain is {desc}
 Question: {question}
 Context from retrieved documents:
 {retrievedDocs}
+strictly follow these cautions: {cautions}
 Answer:
 `;
 
@@ -26,6 +28,17 @@ Answer:
     
 
 async function createBot(req,res){
+    let nolines;
+    if(req.body.size==="small"){
+        nolines=1
+    }else if(req.body.size==="medium"){
+        nolines=2
+    }
+    else{
+        nolines=3
+    }
+    const prompt = promptTemplate.replace('{domain}', req.body.domain).replace('{nooflines}',nolines).replace('{desc}',req.body.desc).replace('{cautions}',req.body.caution);
+    console.log(prompt)
     // const sendEvent = (data) => {
     //     res.write(`data: ${JSON.stringify(data)}\n\n`);
     // };
@@ -47,7 +60,7 @@ async function createBot(req,res){
     //  sendEvent(ip)
     //  res.end();
 
-     console.log("container running:");
+     console.log(req.body);
 
     // res.json({message:"sucess"});
 }
