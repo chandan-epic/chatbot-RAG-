@@ -7,16 +7,16 @@ const Sidebar = () => {
       <div className="p-4 flex-grow">
         <ul className="space-y-2">
           <li className="hover:bg-gray-800 rounded">
-            <Link className="block p-2" to=''>Create Instances</Link>
+            <Link className="block p-2" to=''>Create ChatBots</Link>
           </li>
           <li className="hover:bg-gray-800 rounded">
-            <Link  className="block p-2" to='managedb'>Manage Instances</Link>
+            <Link  className="block p-2" to='managebot'>Manage ChatBots</Link>
           </li>
           <li className="hover:bg-gray-800 rounded">
-            <Link  className="block p-2" to='connectdb'>Connect Databases</Link>
+            <Link  className="block p-2" to='chatbot'>Connect With bots</Link>
           </li>
           <li className="hover:bg-gray-800 rounded">
-            <Link  className="block p-2" to='detdb'>DB Details</Link>
+            <Link  className="block p-2" to='editbot'>Edit bot details</Link>
           </li>
         </ul>
       </div>

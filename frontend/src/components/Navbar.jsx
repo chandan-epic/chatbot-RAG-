@@ -12,7 +12,7 @@ const Navbar = () => {
   const handleLoginPopup = () => {
     setLoginPopup(!loginPopup);
   };
-  const { loginWithRedirect } = useAuth0();
+  const { loginWithRedirect,isAuthenticated ,logout} = useAuth0();
 
   return (
     <nav className="w-full flex py-6 justify-between items-center navbar">
@@ -30,14 +30,28 @@ const Navbar = () => {
             <a href={`#${nav.id}`}>{nav.title}</a>
           </li>
         ))}
-        <li
-          className={`font-poppins font-normal cursor-pointer text-[16px] ${
-            active === "login" ? "text-white" : "text-dimWhite"
-          } ml-6`}
-          onClick={() => loginWithRedirect()}
-        >
-          Login
-        </li>
+        {isAuthenticated?
+              <li
+              className={`font-poppins font-normal cursor-pointer text-[16px] ${
+                active === "logout" ? "text-white" : "text-dimWhite"
+              } ml-6`}
+              onClick={() => {logout(); setActive("logout")}}
+            >
+              Logout
+            </li>
+          :
+            <li
+            className={`font-poppins font-normal cursor-pointer text-[16px] ${
+              active === "login" ? "text-white" : "text-dimWhite"
+            } ml-6`}
+            onClick={() =>{ loginWithRedirect(); setActive("login")}}
+          >
+            Login
+          </li>
+        }
+        
+
+       
       </ul>
 
       <div className="sm:hidden flex flex-1 justify-end items-center">
