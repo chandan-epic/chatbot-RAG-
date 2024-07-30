@@ -14,27 +14,7 @@ These Application create , manage ,deploy chatbots with custom RAG pipelines
 ## Application Screenshots
 
 
-![Alt text](https://github.com/Manohar-1-2/DBdocks/blob/main/images/Capture.PNG)
-
-
-
-![Alt text](https://github.com/Manohar-1-2/DBdocks/blob/main/images/Capture2.PNG)
-
-
-
-![Alt text](https://github.com/Manohar-1-2/DBdocks/blob/main/images/Capture3.PNG)
-
-
-![Alt text](https://github.com/Manohar-1-2/DBdocks/blob/main/images/Capture4.PNG)
-
-
-![Alt text](https://github.com/Manohar-1-2/DBdocks/blob/main/images/Capture5.PNG)
-
-
-![Alt text](https://github.com/Manohar-1-2/DBdocks/blob/main/images/Capture6.PNG)
-
-
-![Alt text](https://github.com/Manohar-1-2/DBdocks/blob/main/images/Capture7.PNG)
+![Alt text](https://github.com/Manohar-1-2chatbot-RAG-/blob/main/images/artitecture.png)
 
 
 
