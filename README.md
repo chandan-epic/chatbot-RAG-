@@ -17,3 +17,8 @@ These Application create , manage ,deploy chatbots with custom RAG pipelines
 ## Application ScreenShots
 ![Alt text](https://github.com/Manohar-1-2/chatbot-RAG-/blob/main/images/Capture1.PNG)
 
+![Alt text](https://github.com/Manohar-1-2/chatbot-RAG-/blob/main/images/Capture2.PNG)
+
+![Alt text](https://github.com/Manohar-1-2/chatbot-RAG-/blob/main/images/Capture3.PNG)
+
+![Alt text](https://github.com/Manohar-1-2/chatbot-RAG-/blob/main/images/Capture4.PNG)
