@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useAuth0 } from '@auth0/auth0-react';
+import {TailSpin} from 'react-loader-spinner'
 const CreateBotForm = () => {
     const [file, setFile] = useState(null);
     const [size, setSize] = useState('small');
@@ -10,6 +12,8 @@ const CreateBotForm = () => {
     const [domain,setDomain]=useState('')
     const [apiKey,setApiKey]=useState('')
     const [step, setStep] = useState(1);
+    const [isLoading,setIsLoading]=useState(false);
+    const { getAccessTokenSilently} = useAuth0();
 
     const handleFileChange = (e) => {
         const selectedFile = e.target.files[0];
@@ -61,12 +65,14 @@ const CreateBotForm = () => {
 
 
         try {
+            setIsLoading(true)
             const response = await axios.post('http://localhost:3000/createbot', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },
             });
-            console.log('Success:', response.data);
+           setIsLoading(false)
+
         } catch (error) {
             console.error('Error:', error);
         }
@@ -74,8 +80,11 @@ const CreateBotForm = () => {
 
     return (
         <div className=" min-h-screen bg-gradient-to-r from-primary  font-poppins">
-            
-            <form onSubmit={handleSubmit} className="w-full max-w-md ml-10 p-6 glassmorphism shadow-md rounded-lg text-gray-900 animate-slideInFromRight" id='stepperForm'>
+            {isLoading?<div className=' absolute top-[280px] right-[510px] flex flex-col justify-center items-center'>
+                 <TailSpin color='#4A90E2' height='50' width={'50'} /> 
+                    <p className='mt-5'>Creating and Deploying ChatBot</p>
+                 </div>:
+                <form onSubmit={handleSubmit} className="w-full max-w-md ml-10 p-6 glassmorphism shadow-md rounded-lg text-gray-900 animate-slideInFromRight" id='stepperForm'>
                 {step === 1 && (
                     <div className="mb-4">
                         <label htmlFor="pdfFile" className="block text-white font-bold mb-2">ChatBot Name</label>
@@ -131,7 +140,7 @@ const CreateBotForm = () => {
                                         <p>Choose Files or drag and drop here</p>
                                     </div>}
                                 
-                               
+                            
                             </div>
                             <input
                                 type="file"
@@ -167,7 +176,7 @@ const CreateBotForm = () => {
                                 <option value="large">Large</option>
                             </select>
                         </div>
-                       
+                    
                         <div className="flex justify-between mt-4">
                             <button
                                 type="button"
@@ -216,6 +225,8 @@ const CreateBotForm = () => {
                     </div>
                 )}
             </form>
+            }
+            
         </div>
     );
 };

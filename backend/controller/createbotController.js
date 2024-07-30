@@ -2,7 +2,11 @@ const {uploadIntoVectorDb}=require("../createdb");
 const { Pinecone }=require('@pinecone-database/pinecone');
 const { GoogleGenerativeAI } = require("@google/generative-ai");
 const { createcontainer  }=require('../aws_ecs/ecsconnection');
+
+const {insertContainerData}=require('../Db/crud')
 const path=require("path");
+const client=require("../Db/dbconnection")
+
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API);
 
@@ -10,6 +14,7 @@ const model = genAI.getGenerativeModel({ model: "text-embedding-004" });
 const pc =new Pinecone({
     apiKey:process.env.PINECONE_API,
 });
+
 namespace="user1";
 
 const promptTemplate = `
@@ -39,30 +44,39 @@ async function createBot(req,res){
     }
     const prompt = promptTemplate.replace('{domain}', req.body.domain).replace('{nooflines}',nolines).replace('{desc}',req.body.desc).replace('{cautions}',req.body.caution);
     console.log(prompt)
+
+
     // const sendEvent = (data) => {
     //     res.write(`data: ${JSON.stringify(data)}\n\n`);
     // };
-    //  if (!req.file) {
-    //      return res.status(400).json({ message: 'No file uploaded' });
-    //  }
-    // res.setHeader('Content-Type', 'text/event-stream');
-    // res.setHeader('Cache-Control', 'no-cache');
-    // res.setHeader('Connection', 'keep-alive');
+     if (!req.file) {
+         return res.status(400).json({ message: 'No file uploaded' });
+     }
 
-    //  const file_ext=path.extname(req.file.originalname);
-    //  sendEvent("file uploaded")
-    //  console.log(req.body.api);
-    // //  console.log(file_ext);
-    //  await uploadIntoVectorDb(pc,model,req.file.buffer,"user5","pinecone-chatbot1",file_ext);
-    //  sendEvent("data processed sucessfully")
-    //  const ip=await createcontainer("manohar",req.body.api,"a787ff1d-2c58-41dd-991e-76101e91afc4","user5",promptTemplate);
-    //  sendEvent("container created")
-    //  sendEvent(ip)
-    //  res.end();
+     const file_ext=path.extname(req.file.originalname);
+     
+     console.log(req.body.api);
 
-     console.log(req.body);
+     await uploadIntoVectorDb(pc,model,req.file.buffer,"user5","pinecone-chatbot1",file_ext);
 
-    // res.json({message:"sucess"});
+     const {ip,taskarn}=await createcontainer("manohar",req.body.apiKey,process.env.PINECONE_API,"user6",prompt);
+
+
+     console.log(ip);
+    const username="manohar"
+    const containerDetails={
+        username:username,
+        ip:ip,
+        taskarn:taskarn,
+        domain:req.body.domain,
+        desc:req.body.desc,
+        size:req.body.size,
+        cautions:req.body.caution,
+        chatbotname:req.body.botname,
+        apikey:req.body.apiKey
+    }
+    insertContainerData(client,containerDetails)
+    res.json({message:"sucess"});
 }
 
 module.exports={

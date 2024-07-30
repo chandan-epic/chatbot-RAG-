@@ -2,7 +2,9 @@ import React, { useEffect, useState } from 'react';
 import CreateBotForm from '../components/CreateBotForm';
 const CreateBot = () => {
   return (
-    <div><CreateBotForm/></div>
+    <div>
+      <CreateBotForm/>
+    </div>
   )
 }
 

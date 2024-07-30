@@ -15,7 +15,7 @@ const Navbar = () => {
   const { loginWithRedirect,isAuthenticated ,logout} = useAuth0();
 
   return (
-    <nav className="w-full flex py-6 justify-between items-center navbar">
+    <nav className="w-full flex pt-6 justify-between items-center navbar">
       <span className=" text-3xl text-white font-bold ">Rag</span>
       <p className=" text-3xl text-white font-bold text-gradient">Chat</p>
       <ul className="list-none sm:flex hidden justify-end items-center flex-1">

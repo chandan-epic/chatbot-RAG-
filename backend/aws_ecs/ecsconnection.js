@@ -168,7 +168,7 @@ async function createcontainer(username,google_key,pinecone_key,namespace,prompt
         // Check task status and get the public IP address
         const task = await checkTaskStatus(taskArn);
         const ip = await getPublicIp(task);
-        return ip;
+        return {ip:ip,taskarn:taskArn};
     } catch (error) {
         console.error('Error:', error);
     }

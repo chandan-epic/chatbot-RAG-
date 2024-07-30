@@ -12,6 +12,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       authorizationParams={{
         redirect_uri: 'http://localhost:5173/userpage'
       }}
+     
     >
       <App />
     </Auth0Provider>
