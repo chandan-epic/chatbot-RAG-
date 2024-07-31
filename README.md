@@ -12,7 +12,7 @@ These Application create , manage ,deploy chatbots with custom RAG pipelines
 - AWS ECS (Elastic Container Service) for Depolying Chatbot Containers
 
 ## System Design
-![Alt text](https://github.com/Manohar-1-2/chatbot-RAG-/blob/main/images/artitecture.png)
+![Alt text](https://github.com/Manohar-1-2/chatbot-RAG-/blob/main/images/artitecture2.png)
 
 ## Application ScreenShots
 ![Alt text](https://github.com/Manohar-1-2/chatbot-RAG-/blob/main/images/Capture1.PNG)
