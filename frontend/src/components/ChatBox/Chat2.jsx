@@ -16,7 +16,7 @@ const Chat2 = ({link}) => {
 
   useEffect(() => {
     // Scroll to the bottom whenever messages change
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    //messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
   const handleSendMessage = async() => {
@@ -87,7 +87,7 @@ const Chat2 = ({link}) => {
 
   return (
     <div className="min-h-screen font-poppins p-4 flex flex-col  items-center">
-      <div className="w-full max-w-4xl bg-gray-800 p-4 shadow-md rounded-lg text-gray-200 animate-slideInFromRight flex flex-col justify-between" style={{ minHeight: '60vh' }}>
+      <div className="w-full max-w-4xl bg-gray-800 p-4 shadow-md rounded-lg text-gray-200  flex flex-col justify-between" style={{ minHeight: '60vh' }}>
         <div className="flex-grow max-h-96 overflow-y-auto p-2 bg-gray-700 rounded-md mb-4 flex flex-col space-y-4">
           {messages.map((message, index) => (
             <div key={index} className={`p-4 rounded-lg flex flex-col transition-transform transform ${message.type === 'sent' ? 'bg-blue-500 text-white self-end' : 'bg-gray-500 text-white self-start'} ${message.type === 'sent' ? 'slide-in-up' : 'slide-in-down'}`}>

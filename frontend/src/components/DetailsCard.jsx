@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
 import { FaEyeSlash, FaEye } from 'react-icons/fa';
-
-const DetailsCard = ({ chatname, link, domain, apikey }) => {
+import { useNavigate } from 'react-router-dom';
+const DetailsCard = ({ chatname, link, domain, apikey ,type}) => {
   const [isHide, setIsHide] = useState(true);
-
+  const nav=useNavigate()
+  const handleconnect=()=>{
+    nav('/userpage/editbot', { state: { link:link,chatname:chatname  } });
+  }
   return (
     <div className='mt-5 border px-4 py-6 rounded-md glassmorphism ml-5 w-[550px]'>
       <div className='space-y-2 mt-3'>
@@ -32,9 +35,14 @@ const DetailsCard = ({ chatname, link, domain, apikey }) => {
         </div>
       </div>
       <div className=' space-x-3'>
-            <button className={`px-2 py-1 bg-white text-black mt-5 rounded-md `}>start</button>
-            <button className={`px-2 py-1 bg-blue-700 text-white mt-5 rounded-md `} >{"Stop"}</button>
-            <button className={`px-2 py-1 bg-red-600 text-white mt-5 rounded-md`}>{"Delete"}</button>
+            {type=='connect'?
+              <button className={`px-2 py-1  bg-blue-700 text-white mt-5 rounded-md `} onClick={handleconnect}>Connect</button>:
+              <div className=' space-x-3'>
+
+                <button className={`px-2 py-1 bg-red-600 text-white mt-5 rounded-md`}>{"Teriminate"}</button>
+              </div>
+            }
+           
         </div>
     </div>
   );

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useAuth0 } from '@auth0/auth0-react';
 import {TailSpin} from 'react-loader-spinner'
+import ProgressBar from './ProgressBar';
 const CreateBotForm = () => {
     const [file, setFile] = useState(null);
     const [size, setSize] = useState('small');
@@ -79,7 +80,7 @@ const CreateBotForm = () => {
     };
 
     return (
-        <div className=" min-h-screen bg-gradient-to-r from-primary  font-poppins">
+        <div className=" min-h-screen bg-gradient-to-r from-primary  font-poppins flex items-start pt-5">
             {isLoading?<div className=' absolute top-[280px] right-[510px] flex flex-col justify-center items-center'>
                  <TailSpin color='#4A90E2' height='50' width={'50'} /> 
                     <p className='mt-5'>Creating and Deploying ChatBot</p>
@@ -226,7 +227,14 @@ const CreateBotForm = () => {
                 )}
             </form>
             }
-            
+            <div className="flex flex-col  ml-10 mt-20 ">
+                <ProgressBar currentStep={step}/>
+                <div className='mt-[100px] ml-20'>
+                    <p className='text-xl'>ChatBot Info</p>
+                    <p>Please provide your chatbot details.<br></br>Specify the domain of your chatbot working field</p>
+                </div>
+            </div>
+           
         </div>
     );
 };

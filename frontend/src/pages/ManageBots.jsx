@@ -21,7 +21,7 @@ const ManageBots = () => {
   return (
     <div>
       {
-        data.map((e,i)=><DetailsCard chatname={e.chatbotname} link={e.ip} apikey={e.apikey} domain={e.domain} />)
+        data.map((e,i)=><DetailsCard chatname={e.chatbotname} link={e.ip} apikey={e.apikey} domain={e.domain} type={"manage"}/>)
       }
 
     </div>
