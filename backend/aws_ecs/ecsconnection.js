@@ -1,6 +1,7 @@
-const { ECSClient, RegisterTaskDefinitionCommand, RunTaskCommand, DescribeTasksCommand } = require('@aws-sdk/client-ecs');
+const { ECSClient, RegisterTaskDefinitionCommand, RunTaskCommand, DescribeTasksCommand,StopTaskCommand } = require('@aws-sdk/client-ecs');
 
 const { EC2Client, DescribeNetworkInterfacesCommand } = require('@aws-sdk/client-ec2');
+
 
 
 // Configuration
@@ -173,9 +174,32 @@ async function createcontainer(username,google_key,pinecone_key,namespace,prompt
         console.error('Error:', error);
     }
 }
+async function stopTask(taskArn) {
+    try {
+        // Define parameters for stopping the task
+        const params = {
+            cluster: CLUSTER_NAME,
+            task: taskArn,
+        };
+
+        // Create a StopTaskCommand instance
+        const command = new StopTaskCommand(params);
+
+        // Send the command to stop the task
+        const response = await ecsClient.send(command);
+
+        console.log('Task stopped successfully:', response);
+        return response;
+    } catch (error) {
+        console.error('Error stopping task:', error);
+        throw error;
+    }
+}
+
 
 
 // main();
 module.exports={
-    createcontainer
+    createcontainer,
+    stopTask
 }
