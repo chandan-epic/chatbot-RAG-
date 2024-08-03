@@ -19,7 +19,7 @@ const ManageBots = () => {
     fetchData();
   }, []);
   return (
-    <div>
+    <div className='ml-12 flex flex-wrap '>
       {
         data.map((e,i)=><DetailsCard chatname={e.chatbotname} link={e.ip} apikey={e.apikey} domain={e.domain} type={"manage"}/>)
       }
@@ -28,4 +28,4 @@ const ManageBots = () => {
   )
 }
 
-export default ManageBots
+export default ManageBots;

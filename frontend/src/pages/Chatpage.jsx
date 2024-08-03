@@ -21,7 +21,7 @@ const Chatpage = () => {
     fetchData();
   }, []);
   return (
-    <div>
+    <div className='flex flex-wrap'>
       {
         data.map((e,i)=><DetailsCard chatname={e.chatbotname} link={e.ip} apikey={e.apikey} domain={e.domain} type={"connect"} />)
       }

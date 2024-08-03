@@ -78,7 +78,7 @@ const CreateBotForm = () => {
             console.error('Error:', error);
         }
     };
-
+   
     return (
         <div className=" min-h-screen bg-gradient-to-r from-primary  font-poppins flex items-start pt-5">
             {isLoading?<div className=' absolute top-[280px] right-[510px] flex flex-col justify-center items-center'>
@@ -227,14 +227,32 @@ const CreateBotForm = () => {
                 )}
             </form>
             }
-            <div className="flex flex-col  ml-10 mt-20 ">
+            {!isLoading &&
+            <div className="flex flex-col  ml-20 mt-20 ">
                 <ProgressBar currentStep={step}/>
                 <div className='mt-[100px] ml-20'>
-                    <p className='text-xl'>ChatBot Info</p>
-                    <p>Please provide your chatbot details.<br></br>Specify the domain of your chatbot working field</p>
+                    {step===1&&
+                    <p className='text-xl'>ChatBot Info</p>}
+                    {step===2&&
+                    <p className='text-xl'>File Upload</p>}
+                    {step===3&&
+                    <p className='text-xl'>Api Key</p>}
+                    {step===1&&
+                    <div className="mt-3 flex flex-col animate-fadeIn text-xl">
+                    <p>✨Please provide your chatbot details</p>
+                    <p>✨Specify the domain of your chatbot</p>
+                    <p>✨Tell us a bit about your chatbot. What’s its purpose?</p>
+                    </div>
+                    }
+                    {step===2&&
+                    <p className="mt-3 flex flex-col animate-fadeIn text-xl">✨Upload the necessary files for your chatbot</p>
+                    }
+                    {step===3&&
+                    <p className="mt-3 flex flex-col animate-fadeIn text-xl">✨please provide your API key</p>
+                    }
                 </div>
             </div>
-           
+}
         </div>
     );
 };
