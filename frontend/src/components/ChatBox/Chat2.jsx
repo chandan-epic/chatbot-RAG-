@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { AiOutlineSend, AiOutlineRobot, AiOutlineUser, AiOutlineCopy, AiOutlineSync, AiOutlineSound } from 'react-icons/ai';
 import axios from 'axios';
-const Chat2 = ({link}) => {
+const Chat2 = ({li}) => {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
   const messagesEndRef = useRef(null);
@@ -27,7 +27,8 @@ const Chat2 = ({link}) => {
       setInput('');
       setMessages((e)=>[...e,{m:input,type:"sent"}])
       const data={question:input}
-      const response = await axios.post(link+'/answer', data);
+      console.log(li)
+      const response = await axios.post(`http://${li}/answer`, data);
       const rmessage=response.data.receivedData
       console.log(rmessage)
       // setMessages((e)=>[...e,{m:rmessage,type:"reicive"}])

@@ -4,6 +4,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { close, logo, menu } from "../assets";
 import { navLinks } from "../constants";
 import LoginPopup from "./LoginPopUP/LoginPopup";
+import { Link } from 'react-router-dom';
 
 const Navbar = () => {
   const [active, setActive] = useState("Home");
@@ -27,7 +28,8 @@ const Navbar = () => {
             } ${index === navLinks.length - 1 ? "mr-0" : "mr-10"}`}
             onClick={() => setActive(nav.title)}
           >
-            <a href={`#${nav.id}`}>{nav.title}</a>
+            
+            <Link to={""}>{nav.title}</Link>
           </li>
         ))}
         {isAuthenticated?

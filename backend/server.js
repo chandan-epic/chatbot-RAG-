@@ -5,6 +5,7 @@ const cors = require('cors');
 const express=require("express");
 const createbotroute=require("./routes/createbot")
 const displaybot=require("./routes/displaybots")
+const stopbot=require("./routes/stopbots")
 const port = 3000;
 const app=express() 
 
@@ -16,6 +17,7 @@ app.use(cors({
 app.use(express.json())
 app.use("/",createbotroute)
 app.use("/",displaybot)
+app.use("/",stopbot)
 app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
   });

@@ -18,14 +18,13 @@ const pc =new Pinecone({
 namespace="user1";
 
 const promptTemplate = `
-You are an AI assistant in the domian of {domain} with access to a database of information. Answer the following question using the most relevant information from given context.
-give {nooflines} lines answers only
-description about your domain is {desc}
-Question: {question}
-Context from retrieved documents:
+You are an AI assistant in the domian of {domain} . Answer the following question using the most relevant information from given info.
+keep the answer precise with {nooflines} lines \n
+description of info is: {desc}
+info:
 {retrievedDocs}
-strictly follow these cautions: {cautions}
-Answer:
+Question: {question}\n
+follow these cautions: {cautions}
 `;
 
 
@@ -42,7 +41,7 @@ async function createBot(req,res){
     else{
         nolines=3
     }
-    const prompt = promptTemplate.replace('{domain}', req.body.domain).replace('{nooflines}',nolines).replace('{desc}',req.body.desc).replace('{cautions}',req.body.caution);
+    const prompt = promptTemplate.replace('{domain}', req.body.domain).replace('{nooflines}',nolines).replace('{desc}',`{${req.body.desc}}\n`).replace('{cautions}',`{${req.body.caution}}`);
     console.log(prompt)
 
 
@@ -56,10 +55,10 @@ async function createBot(req,res){
      const file_ext=path.extname(req.file.originalname);
      
      console.log(req.body.api);
+     const cont_id=`user${Math.random()*1000}`
+     await uploadIntoVectorDb(pc,model,req.file.buffer,cont_id,"pinecone-chatbot1",file_ext);
 
-     await uploadIntoVectorDb(pc,model,req.file.buffer,"user5","pinecone-chatbot1",file_ext);
-
-     const {ip,taskarn}=await createcontainer("manohar",req.body.apiKey,process.env.PINECONE_API,"user6",prompt);
+     const {ip,taskarn}=await createcontainer("manohar",req.body.apiKey,process.env.PINECONE_API,cont_id,prompt);
 
 
      console.log(ip);
@@ -73,7 +72,8 @@ async function createBot(req,res){
         size:req.body.size,
         cautions:req.body.caution,
         chatbotname:req.body.botname,
-        apikey:req.body.apiKey
+        apikey:req.body.apiKey,
+        cont_id:cont_id
     }
     insertContainerData(client,containerDetails)
     res.json({message:"sucess"});
