@@ -12,7 +12,7 @@ const CreateBotForm = () => {
     const [desc,setDesc]=useState('')
     const [domain,setDomain]=useState('')
     const [apiKey,setApiKey]=useState('')
-    const [step, setStep] = useState(1);
+    const [step, setStep] = useState(0);
     const [isLoading,setIsLoading]=useState(false);
     const { getAccessTokenSilently} = useAuth0();
 
@@ -86,7 +86,7 @@ const CreateBotForm = () => {
                     <p className='mt-5'>Creating and Deploying ChatBot</p>
                  </div>:
                 <form onSubmit={handleSubmit} className="w-full max-w-md ml-10 p-6 glassmorphism shadow-md rounded-lg text-gray-900 animate-slideInFromRight" id='stepperForm'>
-                {step === 1 && (
+                {step === 0 && (
                     <div className="mb-4">
                         <label htmlFor="pdfFile" className="block text-white font-bold mb-2">ChatBot Name</label>
                             <input
@@ -125,7 +125,7 @@ const CreateBotForm = () => {
                         </div>
                     </div>
                     )}
-                {step === 2 && (
+                {step === 1 && (
                     <div className="mb-4">
                         <label htmlFor="pdfFile" className="block text-white font-bold mb-2">Upload PDF:</label>
                         <div className="border-dashed border-2 border-blue-900 py-10 px-6 bg-blue-100 text-center rounded-lg">
@@ -196,7 +196,7 @@ const CreateBotForm = () => {
                         </div>
                     </div>
                 )}
-                {step === 3 && (
+                {step === 2 && (
                     <div className="mb-4">
                         <div className="flex justify-between mt-4 flex-col">
                             <label htmlFor="cautions" className="block text-white font-bold mb-2">Gemeni Api key</label>
@@ -227,12 +227,33 @@ const CreateBotForm = () => {
                 )}
             </form>
             }
-            <div className="flex flex-col  ml-10 mt-20 ">
+            <div className="flex flex-col  ml-14 mt-20 ">
                 <ProgressBar currentStep={step}/>
-                <div className='mt-[100px] ml-20'>
-                    <p className='text-xl'>ChatBot Info</p>
-                    <p>Please provide your chatbot details.<br></br>Specify the domain of your chatbot working field</p>
-                </div>
+                {step===0 &&
+                    <div className='mt-[100px] '>
+                        <p className='text-xl'>ChatBot Info</p>
+                        <p> 🚀Please provide your chatbot details.</p>
+                        <p>Specify the domain of your chatbot working field</p>
+                        <p>Enter the short description about your Ai assistant</p>
+                    </div>
+                 }
+                {step===1 &&
+                    <div className='mt-[100px] '>
+                        <p className='text-xl'>Upload Custom Data</p>
+                        <p>✨Upload the custom data specific to chatbot in the format of pdf or txt</p>
+                        <p>🧨Specify the do's and don't of your chatbot in the cuations field</p>
+                        <p>📏Select the length of answers produced by the chatbot </p>
+                    </div>
+                 }
+                {step===2 &&
+                    <div className='mt-[100px] '>
+                        <p className='text-xl'>API key</p>
+                        <p> 🔑 Provide Gemini API key.</p>
+                        <p></p>
+                    </div>
+                 }
+                          
+                
             </div>
            
         </div>
