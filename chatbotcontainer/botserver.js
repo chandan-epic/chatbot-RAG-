@@ -6,11 +6,11 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const {getResponseFromGemini}=require("./chatbot");
 const cors=require("cors")
-const dotenv = require('dotenv');
-dotenv.config();
+// const dotenv = require('dotenv');
+// dotenv.config();
 
 const app = express();
-const port = 3004;
+const port = 3000;
 app.use(cors())
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API);
 const pc = new Pinecone({

@@ -15,9 +15,6 @@ const Sidebar = () => {
           <li className="hover:bg-gray-800 rounded">
             <Link  className="block p-2" to='chatbot'>Connect With bots</Link>
           </li>
-          <li className="hover:bg-gray-800 rounded">
-            <Link  className="block p-2" to='editbot'>Edit bot details</Link>
-          </li>
         </ul>
       </div>
     </div>

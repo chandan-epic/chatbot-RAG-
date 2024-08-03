@@ -36,10 +36,20 @@ const getContainerTaskarn = async (con, ip) => {
         return null;
     }
 };
+const delContainer = async (con, ip) => {
+    const mydb = con.db("userdatabase");
+    const myColl = mydb.collection("containerdetails");
+
+    // Query to find the document by botname
+    const query = { ip: ip };
+    const result = await myColl.deleteOne(query);
+    console.log('Deleted document count:', result.deletedCount);
+};
 
 
 module.exports={
     insertContainerData,
     getConatainerData,
-    getContainerTaskarn
+    getContainerTaskarn,
+    delContainer
 }

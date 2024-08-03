@@ -11,8 +11,14 @@ const { RecursiveCharacterTextSplitter } = require("langchain/text_splitter");
 
 async function splitTextIntoChunks(text) {
     const splitter = new RecursiveCharacterTextSplitter({
-        chunkSize: 700, 
-        chunkOverlap: 100, 
+        chunkSize: 1200, 
+        chunkOverlap: 500, 
+        separators:[
+            "\n\n",
+            "\n",
+            " ",
+            ".",
+        ]
     });
 
     const chunks = await splitter.splitText(text);
@@ -66,6 +72,7 @@ const delete_data=()=>{
     const index = pc.index('pinecone-chatbot1');
     index.deleteAll()
 }
+//delete_data()
 
 //uploadIntoVectorDb(pc,model,pdfFilePath,namespace)
 module.exports={

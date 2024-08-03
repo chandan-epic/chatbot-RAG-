@@ -13,7 +13,9 @@ async function userInput(input,model,pc,namespace,dbname) {
 async function getResponseFromGemini(input,modelEmbeded,promptTemplate,modeltxt,pineconeApi,namespace,dbname) {
        
     const match=await userInput(input,modelEmbeded,pineconeApi,namespace,dbname);
-    const prompt = promptTemplate.replace('{question}', input).replace('{retrievedDocs}', match);
+    
+    const prompt = promptTemplate.replace('{question}', `${input}?\n`).replace('{retrievedDocs}',`{${match[0].metadata.text}}` );
+    console.log(prompt)
     const result = await modeltxt.generateContent(prompt);
     const response = await result.response;
     console.log(response.text())

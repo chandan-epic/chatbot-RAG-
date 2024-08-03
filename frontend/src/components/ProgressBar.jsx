@@ -29,7 +29,7 @@ const ProgressBar = ({ currentStep }) => {
                 step.number
               )}
             </div>
-            <span className="ml-2 text-sm text-gray-400 mt-4">{step.label}</span>
+            <span className="ml-2 text-sm text-white mt-4">{step.label}</span>
           </div>
           {index < steps.length - 1 && (
             <div

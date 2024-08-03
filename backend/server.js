@@ -18,8 +18,6 @@ app.use(express.json())
 app.use("/",createbotroute)
 app.use("/",displaybot)
 app.use("/",stopbot)
-app.use("/answer",ansforQues)
-
 app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
   });

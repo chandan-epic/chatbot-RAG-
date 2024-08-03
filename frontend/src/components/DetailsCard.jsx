@@ -2,26 +2,29 @@ import React, { useState } from 'react';
 import { FaEyeSlash, FaEye,FaTrash  } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-
-const DetailsCard = ({ chatname, link, domain, apikey ,type}) => {
+const DetailsCard = ({ chatname, link, domain, apikey ,type,fetchdata,data}) => {
   const [isHide, setIsHide] = useState(true);
   const nav=useNavigate()
   const handleconnect=()=>{
-    nav('/userpage/editbot', { state: { link:link,chatname:chatname  } });
+    nav('/userpage/editbot', { state: { li:link,chatname:chatname  } });
   }
-  const Terminate=async () =>{
+  const handleTeriminate=async () =>{
     try{
         const response=await axios.post('http://localhost:3000/stopbot', { link }, {
           headers: {
               'Content-Type': 'application/json',
           },
         })
+        if(response.status==200){
+          alert("Sucessfully teriminated")
+          fetchdata()
+        }
     }catch(error){
-        console.error('Error:', error);
-    }
+        console.error('Error:', error);
+    }
 }
   return (
-    <div className='mt-5 ml-12 border px-4 py-6 rounded-md glassmorphism ml-5 w-[550px] animate-slideInFromRight'>
+    <div className='ml-10 mt-5 border px-4 py-6 rounded-md glassmorphism w-[500px]'>
       <div className='space-y-2 mt-3'>
         <p className='font-semibold text-lg text-white'>Chatbot Name</p>
         <span className='text-gray-200'>{chatname}</span>
@@ -49,10 +52,10 @@ const DetailsCard = ({ chatname, link, domain, apikey ,type}) => {
       </div>
       <div className=' space-x-3'>
             {type=='connect'?
-              <button className={`px-2 py-1  bg-blue-700 text-white mt-5 rounded-md animate-slideInFromLeft`} onClick={handleconnect}>Connect</button>:
+            <div className=' space-x-3'>
+              <button className={`px-2 py-1  bg-blue-700 text-white mt-5 rounded-md animate-slideInFromLeft`} onClick={handleconnect}>Connect</button></div>:
               <div className=' space-x-3'>
-
-                <button className={`px-2 py-1 bg-red-600 text-white mt-5 rounded-md`} onClick={Terminate}>{"Teriminate"}</button>
+                <button className={`px-2 py-1 bg-red-600 text-white mt-5 rounded-md hover:bg-red-400`} onClick={handleTeriminate}>{"Teriminate"}</button>
               </div>
             }
            
