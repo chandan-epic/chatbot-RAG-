@@ -8,7 +8,7 @@ These Application create , manage ,deploy chatbots with custom RAG pipelines
 - MongoDb for managing user data
 - Docker containers for running user chatbots
 - Aws sdk for creating containers in the AWS cloud
-- AWS ECR (Elastic Container Registry) for as container repository
+- AWS ECR (Elastic Container Registry) for container repository
 - AWS ECS (Elastic Container Service) for Depolying Chatbot Containers
 
 ## System Design
@@ -17,10 +17,20 @@ These Application create , manage ,deploy chatbots with custom RAG pipelines
 ## Application ScreenShots
 ![Alt text](https://github.com/Manohar-1-2/chatbot-RAG-/blob/main/images/Capture1.PNG)
 
-![Alt text](https://github.com/Manohar-1-2/chatbot-RAG-/blob/main/images/Capture2.PNG)
-
-![Alt text](https://github.com/Manohar-1-2/chatbot-RAG-/blob/main/images/Capture3.PNG)
-
-![Alt text](https://github.com/Manohar-1-2/chatbot-RAG-/blob/main/images/Capture4.PNG)
-
 ![Alt text](https://github.com/chandan-epic/chatbot-RAG-/blob/main/images/image1.png?raw=true)
+
+
+![Alt text](https://github.com/chandan-epic/chatbot-RAG-/blob/main/images/image2.png?raw=true)
+
+![Alt text](https://github.com/chandan-epic/chatbot-RAG-/blob/main/images/image3.png?raw=true)
+
+![Alt text](https://github.com/chandan-epic/chatbot-RAG-/blob/main/images/image4.png?raw=true)
+
+![Alt text](https://github.com/chandan-epic/chatbot-RAG-/blob/main/images/image5.png?raw=true)
+
+![Alt text](https://github.com/chandan-epic/chatbot-RAG-/blob/main/images/image6.png?raw=true)
+
+![Alt text](https://github.com/chandan-epic/chatbot-RAG-/blob/main/images/image7.png?raw=true)
+
+
+
