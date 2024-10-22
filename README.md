@@ -1,4 +1,4 @@
-# Fully Automated ChatBot creating application with Rag
+# Fully Automated "ChatBot creating application" with RAG
 
 ## Description
 
